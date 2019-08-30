@@ -1,0 +1,195 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% E.Pinault-Bigeard - e.pinault-bigeard@upsti.fr
+% http://s2i.pinault-bigeard.com
+% CC BY-NC-SA 2.0 FR - http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package UPSTI_Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{inputs/commands}
+
+%---------------------------------%
+% Paramètres du package
+%---------------------------------%
+
+% Version du document (pour la compilation)
+% 1: Document prof
+% 2: Document élève
+% 3: Document à publier
+\input{variables/documentVersion}
+
+\input{variables/infoDoc}
+
+% Référence au programme
+%\newcommand{\UPSTIprogramme}{\EPBComp \EPBCompP{B1-02}, \EPBCompP{B2-49}, \EPBCompS{B2-50}, \EPBCompS{B2-51}, \EPBCompP{C1-07}, \EPBCompP{C1-08}}
+
+% Si l'auteur n'est pas l'auteur par défaut
+%\renewcommand{\UPSTIauteur}{WWOOOOOOWW}
+
+% Si le document est réalisé au nom de l'équipe
+%\newcommand{\UPSTIdocumentCollegial}{1}
+
+% Source
+\newcommand{\UPSTIsource}{A. Juton, J. Deprez, J. Maillefert, G. Vaquette}
+
+% Version du document
+\newcommand{\UPSTInumeroVersion}{1.0}
+
+%-----------------------------------------------
+\UPSTIcompileVars		% "Compile" les variables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Début du document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\UPSTIbuildPage
+
+%\UPSTIobjectif{Durant cette activité, nous allons analyser une trame pour l'envoi d'informations sur une étiquette.}
+
+\section{Introduction}
+Les automates industriels programmables sont au coeur des systèmes automatisé de production ou de gestion technique du bâtiment.
+A partir d'\textbf{d'information} en provenance des \textbf{capteurs}, ils agissent sur un \textbf{produit} à l'aide d'\textbf{actionneurs}.
+
+Les automates présentent les avantages et inconvénients suivants
+
+\begin{minipage}[t]{.49\linewidth}
+	\begin{itemize}
+		\itemc Faible coût de développement
+		\itemc Déploiement et modifications rapides
+		\itemc Mécaniquement et électriquement robuste
+	\end{itemize}
+\end{minipage}\hfill
+\begin{minipage}[t]{.49\linewidth}
+	\begin{itemize}
+		\itemx Equipement coûteux
+		\itemx Encombrant
+	\end{itemize}
+\end{minipage}
+
+La facilité et la rapidité de développement ainsi que sa robustesse et l'électronique optimisée par le fabricant rendent l'automate plus utilisé que le micro-controleur dans l'industrie de production et de gestion technique du bâtiment.
+
+\section{Structures des systèmes automatisés}
+\UPSTIaRetenir{%
+	L'automate industriel constitue la \textbf{partie commande} d'un système industriel. Elle communique avec la \textit{partie opérative} en envoyant des \textit{commandes} aux \textbf{\color{green} pré-actionneurs} et reçoit des \textbf{\color{red} informations} de la part des capteurs.%
+}
+
+\UPSTIaRetenir{%
+Les \textbf{entrées} de l'automates sont reliés aux \textbf{capteurs} du système.\\
+Les \textbf{sorties} de l'automates sont reliés aux \textbf{pré-actionneurs} du système.}
+
+La Figure~\ref{fig:structureAPI} illustre la communication entre l'automate et la partie opérative d'un système. Il aparaît également l'\textbf{I}nterface \textbf{H}omme \textbf{M}achine (\textbf{IHM}) permettant de communiquer avec les utilisateurs ainsi qu'un réseau informatique pour communiquer avec des ordinateurs, d'autres automates ou même tout appareil sur internet.
+
+\begin{figure}[ht]
+	\centering
+	\input{tikz/structure.tikz}
+	\caption{Sructure d'un système industriel}
+	\label{fig:structureAPI}
+\end{figure}
+
+\subsection{Les actionneurs}
+Un actionneur est un composant réalisant une conversion d'énergie afin d'agir sur le système. C'est lui qui réalise l'\textbf{action} du système, d'où son nom actionneur.
+
+\UPSTIexemple{%
+\begin{minipage}[b]{.49\textwidth}
+\centering
+	\includegraphics[width=.3\textwidth,height=.4\textheight,keepaspectratio]{images/moteur_electrique_triphase}
+
+	Le moteur à courant continu converti l'énergie électrique en énergie mécanique.
+\end{minipage}\hfill
+\begin{minipage}[b]{.49\textwidth}
+\centering
+	\includegraphics[width=.3\textwidth,height=.4\textheight,keepaspectratio]{images/verin_pneu}
+
+	Un vérin pneumatique converti une énergie pneumatique en énergie mécanique.
+\end{minipage}
+ %
+}
+
+\subsection{Les pré-actionneurs}
+Les \textbf{pré-actionneurs} remplisse la fonction \textit{distribuer} de la chaîne d'énergie. Ce sont eux qui  adaptent l'énergie puis la distubuent aux différents actionneurs. Ce sont eux qui \textbf{sont commandés par l'automate en vue de faire fonctionner les actionneurs}.
+
+\UPSTIaRetenir{Un automate programmable \textbf{commande les pré-actionneurs} en vue de faire fonctionner les \textit{actionneurs}.}
+
+\UPSTIexemple{%
+\begin{minipage}[b]{.49\textwidth}
+\centering
+	\includegraphics[width=.3\textwidth,height=.4\textheight,keepaspectratio]{images/varia_vitesse_mot_elec}
+
+	Un variateur de vitesse pour moteur électrique adapte la tension d'alimentation du moteur pour en régler la vitesse.
+\end{minipage}\hfill
+\begin{minipage}[b]{.49\textwidth}
+\centering
+	\includegraphics[width=.3\textwidth,height=.4\textheight,keepaspectratio]{images/distri_electroPneu}
+
+	Un distributeur électro-pneumatique contrôle l'arrivée d'air comprimé dans les organes pneumatique (vérin par exemple).
+\end{minipage}
+ %
+}
+
+\subsection{Les capteurs}
+Les capteurs sont des composant permettant d'acquérir une information en provenance du monde extérieur. Dans le cas d'un automate industriel, il permet de connaître l'état du système.
+
+\UPSTIaRetenir{Un automate industriel acquiert des informations sur l'état d'un système à l'aide de \textbf{capteurs}}
+
+\UPSTIexemple{%
+\begin{minipage}[b]{.49\textwidth}
+\centering
+	\includegraphics[width=.3\textwidth,height=.4\textheight,keepaspectratio]{images/capt_inductif}
+
+	Un \textbf{capteur inductif} détecte la présence d'objets métalliques
+\end{minipage}\hfill
+\begin{minipage}[b]{.49\textwidth}
+\centering
+	\includegraphics[width=.3\textwidth,height=.4\textheight,keepaspectratio]{images/capt_optique}
+
+	Un capteur optique détecte la présence d'un objet à l'aide d'un faisceau optique.
+\end{minipage}
+\begin{minipage}[b]{.49\textwidth}
+\centering
+	\includegraphics[width=.3\textwidth,height=.4\textheight,keepaspectratio]{images/detecteur_contact}
+
+	Un capteur de contact détecte la présence d'un objet par contact.
+\end{minipage}\hfill
+\begin{minipage}[b]{.49\textwidth}
+\centering
+	\includegraphics[width=.3\textwidth,height=.4\textheight,keepaspectratio]{images/codeur_optique}
+
+	Un codeur optique renvoie des informations permettant de connaitre la position et la vitesse d'un moteur.
+\end{minipage}
+%
+}
+
+\subsection{Strucure locale et déportée}
+Comme nous l'avons vu dans la section précédente, les automates industriels sont reliés aux capteurs et pré-actionneurs du système.
+
+Sur les systèmes de petite taille et si l'installation le permet, les entrées et sorties de l'automate sont reliées directement à l'automate, on parle de \textbf{structure locale}. Pour des installations plus grande ou lorsque la configuration l'impose, les entrées et sorties sont reliées à des modules déportés (éloignés de l'automate), on parle de \textbf{structure déportée}. Ces deux configurations sont illustrée sur la Figure~\ref{fig:local_deporte}
+
+\begin{figure}[h]
+	\begin{subfigure}[b]{.49\textwidth}
+		\centering
+		\input{tikz/local_API.tikz}
+		\caption{Strucure locale}
+	\end{subfigure}
+	\begin{subfigure}[b]{.49\textwidth}
+	\centering
+	\input{tikz/depoted_API.tikz}
+	\caption{Strucure déportée}
+	\end{subfigure}
+	\caption{Strucure locale et déportée}
+	\label{fig:local_deporte}
+\end{figure}
+
+Les bus de terrain reliant les modules peuvent être de différentes natures selon la configuration (CAN, Profibus, LON, BACNET, Ethernet, \dots).
+
+\UPSTIaRetenir{%
+\begin{description}
+	\item [Sructure locale : ] Les entrées et sorties sont reliés à l'automate
+	\item [Strucure déportée : ] Les entrées et sorties sont reliés à un module spécifique qui communique avec l'automate par un BUS de terrain.
+\end{description}
+}
+
+
+\end{document}
