@@ -1,0 +1,139 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% E.Pinault-Bigeard - e.pinault-bigeard@upsti.fr
+% http://s2i.pinault-bigeard.com
+% CC BY-NC-SA 2.0 FR - http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[11pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Package UPSTI_Document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{inputs/commands}
+
+%---------------------------------%
+% Paramètres du package
+%---------------------------------%
+
+% Version du document (pour la compilation)
+% 1: Document prof
+% 2: Document élève
+% 3: Document à publier
+\input{variables/documentVersion}
+
+% Variante
+%\newcommand{\UPSTIvariante}{2}
+
+\input{variables/infoDoc}
+
+% Référence au programme
+%\newcommand{\UPSTIprogramme}{\EPBComp \EPBCompP{B1-02}, \EPBCompP{B2-49}, \EPBCompS{B2-50}, \EPBCompS{B2-51}, \EPBCompP{C1-07}, \EPBCompP{C1-08}}
+
+% Si l'auteur n'est pas l'auteur par défaut
+%\renewcommand{\UPSTIauteur}{WWOOOOOOWW}
+
+% Si le document est réalisé au nom de l'équipe
+%\newcommand{\UPSTIdocumentCollegial}{1}
+
+% Source
+%\newcommand{\UPSTIsource}{UPSTI}
+
+% Version du document
+\newcommand{\UPSTInumeroVersion}{1.0}
+
+%-----------------------------------------------
+\UPSTIcompileVars		% "Compile" les variables
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{dirtree}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Début du document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\UPSTIbuildPage
+\section*{Introduction}
+Le logiciel de développement d'un API (Automate Programmable Industriel) est un logiciel permettant de configurer et de programmer l'API associé. Chaque constructeur d'API  impose son propre logiciel de développement.
+
+\begin{table}[ht]
+\centering
+	\input{tables/logiciel_par_constructeur}
+	\caption{Logiciel de développement pour chaque constructeur.}
+\end{table}
+
+\section{Projet Unity Pro}
+
+La Figure~\ref{fig:unity_fenetre} est une capture d'écran d'une fenêtre \textit{Unity Pro}. Sur la gauche se trouve l'Arborescence du projet, décrite dans la section suivante et la grande partie à droite est la partie programmation.
+
+\begin{figure}[hbt]
+	\centering
+	\includegraphics[trim = 0mm 15mm 0mm 0mm, clip,width=.7\linewidth]{images/unity_arbo}
+	\caption{Fenêtre Unity Pro}
+	\label{fig:unity_fenetre}
+\end{figure}
+
+\subsection{L'Arborescence d'un projet Unity}
+
+\begin{figure}[ht]
+\centering
+\begin{minipage}{.33\linewidth}
+	\includegraphics[trim = 2mm 90mm 385mm 53mm, clip, width=\textwidth]{images/unity_arbo}
+\end{minipage}\hfill
+\begin{minipage}{.63\linewidth}
+\dirtree{%
+.0 Projet.
+.1 API\_Tapis[\dots]/ \DTcomment{Une première configuration}.
+	 .2 Symboles \DTcomment{Variables globales}.
+	 .2 Paramétrage unité et table E/S.
+	 .2 Paramètres \DTcomment{Paramètres de l'automate}.
+	 .2 Programmes/ \DTcomment{Programmes dans l'API}.
+				.3 Programme\_1/ \DTcomment{Exemple 1 : LADDER}.
+					.4 Symboles \DTcomment{Variables locales au programme}.
+					.4 actions \DTcomment{Le programme en tant que tel}.
+					.4 END.
+				.3 Programme\_2/ \DTcomment{Exemple 2 : SFC}.
+					.4 Symboles.
+					.4 Actions.
+					.4 Transitions.
+					.4 Sous-histogrammes.
+.1 NouvAPI[\dots]/ \DTcomment{Une autre configuration}.
+}
+\end{minipage}
+	\caption{Arborescence d'un projet Unity}
+	\label{fig:unity_arbo}
+\end{figure}
+
+La Figure~\ref{fig:unity_arbo} présente l'arborescence générale d'un projet \textit{Unity Pro}.
+
+Un projet est constitué de différentes \textbf{configurations} (une configuration pour chaque automate relié au projet). Dans l'exemple de la Figure~\ref{fig:unity_arbo}, les configurations sont \includegraphics[trim = 40 582 1200 170, clip,height=\fontcharht\font`\B]{images/unity_arbo} et \includegraphics[trim = 40 296 1210 457, clip,height=\fontcharht\font`\B]{images/unity_arbo}.
+
+Dans chaque configuration, on trouve :
+\begin{itemize}
+	\item Les ressources
+		\begin{itemize}
+			\item \begin{minipage}[c]{.55\textwidth}
+			 	On y trouve la configuration de l'automate, les variables globales (symboles), les déclarations des modules d'entrée-sortie, les registres (mémoire de l'automate) \dots
+			\end{minipage}\hfill
+			\begin{minipage}[c]{.3\textwidth}
+				\includegraphics[trim = 50 510 1110 180, clip,height=6\fontcharht\font`\B]{images/unity_arbo}
+			\end{minipage}
+		\end{itemize}
+	\item Les programmes (ou tâche)
+	 	\begin{itemize}
+		\item tous les programmes d'un automate sont exécutés \textbf{simultanément}
+		\item chaque progamme peut avoir des variables locales (symboles)
+		\item ils peuvent être écrits en SFC, FBD, LD, ST ou IL.
+		\end{itemize}
+\end{itemize}
+\subsection{Les variables}
+Les variables fournissent un moyen d'identifier des objets de données dont le contenu peut varier comme, par exemple, les données associées aux entrées/sorties.
+
+
+
+\UPSTIaRetenir{\begin{itemize}
+	Les variables sont un moyen de stoquer une donnée (le nombre de pièces dans un bac par exemple) ou de connaître l'état d'un capteur (par exemple la présence d'une pièce devant un capteur ou encore la température)
+	\item Les variables (symboles) \textbf{globales} sont utilisables par toutes les tâches
+	\item Les variables (symboles) \textbf{locales} à une tâche ne sont utilisables que par cette tâche.
+\end{itemize}}
+
+\UPSTIremarque{Dans \textit{Unity Pro}, les variables sont appelées \includegraphics[trim = 100 457.5 1190 298, clip,height=\fontcharht\font`\B]{images/unity_arbo}, on trouve les variables \textbf{globales} dans les ressources de chaque API et les variables locales à chaque programme dans sa propre arborescence.}
+
+
+\end{document}
