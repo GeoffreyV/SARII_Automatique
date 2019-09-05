@@ -125,8 +125,6 @@ Dans chaque configuration, on trouve :
 \subsection{Les variables}
 Les variables fournissent un moyen d'identifier des objets de données dont le contenu peut varier comme, par exemple, les données associées aux entrées/sorties.
 
-
-
 \UPSTIaRetenir{\begin{itemize}
 	Les variables sont un moyen de stoquer une donnée (le nombre de pièces dans un bac par exemple) ou de connaître l'état d'un capteur (par exemple la présence d'une pièce devant un capteur ou encore la température)
 	\item Les variables (symboles) \textbf{globales} sont utilisables par toutes les tâches
@@ -135,5 +133,33 @@ Les variables fournissent un moyen d'identifier des objets de données dont le c
 
 \UPSTIremarque{Dans \textit{Unity Pro}, les variables sont appelées \includegraphics[trim = 100 457.5 1190 298, clip,height=\fontcharht\font`\B]{images/unity_arbo}, on trouve les variables \textbf{globales} dans les ressources de chaque API et les variables locales à chaque programme dans sa propre arborescence.}
 
+Les variables sont donc stoquées dans la mémoire de l'automate. La mémoire d'un automate peut être vue comme une armoire gigantesques composée de différents "tiroirs" dans lesquelles on pourra stoquer une valeur. On représente souvent la mémoire par un tableau dans lequel on stoque une valeur par case. Une variable est donc stoquée dans une des cases du tableau. Le \textit{numéro} de la case est appelé \textbf{adresse} de la variable.
+
+\UPSTIaRetenir[Adresse d'une variable]{
+L'\textbf{adresse} d'une variable correspond à l'endroit où cette variable est stoquée dans la mémoire de l'automate.
+}
+
+Dans un automate, en plus des variables internes servant à stoquer des infomations, il faut pouvoir accéder aux différentes \textbf{entrées/sorties} de l'automate. Ces entrées/sorties sont également associées à des adresses.
+
+Ces adresses sont d'une forme bien précise : \textbf{\%}\textbf{\color{green}Attribut}\textbf{\color{red}Type}\textbf{\color{blue}k.i.j}. Par exemple : \textbf{\%}\textbf{\color{green} Q}\textbf{\color{red}X}\textbf{\color{blue}2.4.F}.
+
+\begin{table}[hb]
+\centering
+	\input{tables/adresse_entrees_sorties}
+	\caption{décomposition d'une adresses}
+\end{table}
+
+
+\subsubsection{Différents types de variables}
+En pratique, les variables que l'on stoque n'ont pas toutes le même type et ne nécessite pas la même taille de stockage.
+
+\UPSTIexemple{On comprends aisément qu'un booléen (un seul bit qui ne peut valoir que \textbf{1} ou \textbf{0}) prend moins de place qu'un entier codé sur 8 bits pouvant prendre $2^8$ valeurs.}
+
+Le Tableau~\ref{tab:types_de_donnees} représente les noms et types de données utilisés par les automates.
+\begin{table}[h]
+	\input{tables/typesVariables}
+	\caption{Nom et tailles des différents types de données}
+	\label{tab:types_de_donnees}
+\end{table}
 
 \end{document}
