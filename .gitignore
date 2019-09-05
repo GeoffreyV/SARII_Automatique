@@ -50,6 +50,8 @@ gitignore/TeX.gitignore
 @ryanakca
 @ptigwe
 274 lines (213 sloc) 2.6 KB
+## Dolphin files
+*.directory
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof
